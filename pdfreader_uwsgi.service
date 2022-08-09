@@ -1,0 +1,21 @@
+[Unit]
+
+Description = pdfreader uwsgi server
+After = network.target
+
+[Service]
+KillSignal = SIGQUIT
+
+
+WorkingDirectory=/home/johnchan
+User=johnchan
+
+ExcecStartPre = conda activate pdf
+ExecStart = /home/johnchan/anaconda3/envs/pdf/bin/uwsgi --ini /home/johnchan/pdfreader//uwsgi.ini
+Restart = always
+Type = notify
+NotifyAccess = all
+StandardError = syslog
+
+[Install]
+WantedBy = multi-user.target
