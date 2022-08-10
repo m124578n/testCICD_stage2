@@ -71,8 +71,8 @@ jobs:
           
             sudo cp /home/ec2-user/testCICD_stage2/nginx.conf /etc/nginx
             sudo cp /home/ec2-user/testCICD_stage2/uwsgi.service /etc/systemd/system
-            sudo cp -r /home/ec2-user/testCICD_stage2/sites-available /ect/nginx
-            sudo cp -r /home/ec2-user/testCICD_stage2/sites-enabled /ect/nginx
+            sudo cp -r /home/ec2-user/testCICD_stage2/sites-available /etc/nginx
+            sudo cp -r /home/ec2-user/testCICD_stage2/sites-enabled /etc/nginx
             sudo systemctl daemon-reload
             sudo systemctl restart nginx.service
             sudo systemctl restart uwsgi.service
