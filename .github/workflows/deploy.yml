@@ -35,7 +35,8 @@ jobs:
           script: | 
             whoami
         
-            sudo yum  groupinstall 'Development Tools'
+            sudo yum -y install gcc
+            sudo yum -y install python3-devel
             sudo amazon-linux-extras install nginx1
             sudo yum -y install git
             cd /home/ec2-user

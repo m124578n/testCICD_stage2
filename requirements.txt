@@ -1,2 +1,4 @@
+wheel
 uwsgi
 django
+
