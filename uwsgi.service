@@ -11,7 +11,7 @@ WorkingDirectory=/home/ec2-user
 User=root
 
 ExcecStartPre = conda activate pdf
-ExecStart = /home/ec2-user/venv/bin/uwsgi --ini /home/ec2-user/testCICD//uwsgi.ini
+ExecStart = /home/ec2-user/venv/bin/uwsgi --ini /home/ec2-user/testCICD_stage2//uwsgi.ini
 Restart = always
 Type = notify
 NotifyAccess = all

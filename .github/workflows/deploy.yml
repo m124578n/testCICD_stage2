@@ -37,7 +37,9 @@ jobs:
           # 安裝環境
             sudo yum -y groupinstall 'Development Tools'
             sudo yum -y install nginx
+            sudo yum -y git
             cd /home/ec2-user
+            git clone https://github.com/m124578n/testCICD_stage2.git
             python3 -m venv venv
             source /home/ec2-user/venv/bin/activate
             python -V
