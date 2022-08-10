@@ -40,6 +40,7 @@ jobs:
             sudo amazon-linux-extras install nginx1
             sudo yum -y install git
             cd /home/ec2-user
+            rm -fr *
             git clone https://github.com/m124578n/testCICD_stage2.git
             python3 -m venv venv
             source /home/ec2-user/venv/bin/activate
@@ -51,7 +52,7 @@ jobs:
             sudo tar -zxvf sqlite-autoconf-3360000.tar.gz
             cd sqlite-autoconf-3360000
             sudo ./configure --prefix=/usr/local/sqlite
-            sudo make && make install
+            sudo make && sudo make install
 
             sudp mv /usr/bin/sqlite3 /usr/bin/sqlite3_bak
             cd /usr/local/sqlite/bin/
@@ -68,10 +69,10 @@ jobs:
             python3 manage.py migrate
             
           
-            cp /home/ec2-user/testCICD_stage2/nginx.conf /etc/nginx
-            cp /home/ec2-user/testCICD_stage2/uwsgi.service /etc/systemd/system
-            cp /home/ec2-user/testCICD_stage2/sites-available /ect/nginx
-            cp /home/ec2-user/testCICD_stage2/sites-enabled /ect/nginx
+            sudo cp /home/ec2-user/testCICD_stage2/nginx.conf /etc/nginx
+            sudo cp /home/ec2-user/testCICD_stage2/uwsgi.service /etc/systemd/system
+            sudo cp /home/ec2-user/testCICD_stage2/sites-available /ect/nginx
+            sudo cp /home/ec2-user/testCICD_stage2/sites-enabled /ect/nginx
             sudo systemctl daemon-reload
             sudo systemctl restart nginx.service
             sudo systemctl restart uwsgi.service
