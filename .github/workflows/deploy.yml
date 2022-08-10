@@ -32,11 +32,47 @@ jobs:
           key: ${{ secrets.TOKEN }}
           username: ec2-user
           # 執行部屬的指令
-          script: |
+          script: | 
             whoami
-            cd /home/ec2-user/testCICD
-            pwd
-            git pull 
+          # 安裝環境
+            sudo yum -y groupinstall 'Development Tools'
+            sudo yum -y install nginx
+            cd /home/ec2-user
+            python3 -m venv venv
             source /home/ec2-user/venv/bin/activate
             python -V
+            pip install -r requirements.txt
+          # sqlite3 更新
+            cd /usr/local/src
+            wget http://www.sqlite.org/2021/sqlite-autoconf-3360000.tar.gz
+            tar -zxvf sqlite-autoconf-3360000.tar.gz
+            cd sqlite-autoconf-3360000
+            ./configure --prefix=/usr/local/sqlite
+            make && make install
+
+            mv /usr/bin/sqlite3 /usr/bin/sqlite3_bak
+            cd /usr/local/sqlite/bin/
+            ln -s sqlite3 /usr/bin/sqlite3
+
+            echo export LD_LIBRARY_PATH="/usr/local/sqlite/lib" >> ~/.bashrc
+            source ~/.bashrc
+
+            mv /usr/lib64/libsqlite3.so.0 /usr/lib64/libsqlite3.so.0_old
+            ln -s /usr/local/sqlite/lib/libsqlite3.so.0.8.6 /usr/lib64/libsqlite3.so.0
+
+            cd /home/ec2-user/testCICD_stage2
+            python3 manage.py makemigrations
+            python3 manage.py migrate
+            
+          # 更換設定檔
+            cp /home/ec2-user/testCICD_stage2/nginx.conf /etc/nginx
+            cp /home/ec2-user/testCICD_stage2/uwsgi.service /etc/systemd/system
+            cp /home/ec2-user/testCICD_stage2/sites-available /ect/nginx
+            cp /home/ec2-user/testCICD_stage2/sites-enabled /ect/nginx
+            sudo systemctl daemon-reload
+            sudo systemctl restart nginx.service
+            sudo systemctl restart uwsgi.service
+            
+
+
             
