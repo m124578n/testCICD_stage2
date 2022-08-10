@@ -34,8 +34,8 @@ jobs:
           # 執行部屬的指令
           script: | 
             whoami
-          # 安裝環境
-            sudo yum -y groupinstall 'Development Tools'
+        
+            sudo yum  groupinstall 'Development Tools'
             sudo yum -y install nginx
             sudo yum -y git
             cd /home/ec2-user
@@ -44,7 +44,7 @@ jobs:
             source /home/ec2-user/venv/bin/activate
             python -V
             pip install -r requirements.txt
-          # sqlite3 更新
+          
             cd /usr/local/src
             wget http://www.sqlite.org/2021/sqlite-autoconf-3360000.tar.gz
             tar -zxvf sqlite-autoconf-3360000.tar.gz
@@ -66,7 +66,7 @@ jobs:
             python3 manage.py makemigrations
             python3 manage.py migrate
             
-          # 更換設定檔
+          
             cp /home/ec2-user/testCICD_stage2/nginx.conf /etc/nginx
             cp /home/ec2-user/testCICD_stage2/uwsgi.service /etc/systemd/system
             cp /home/ec2-user/testCICD_stage2/sites-available /ect/nginx
