@@ -36,8 +36,8 @@ jobs:
             whoami
         
             sudo yum  groupinstall 'Development Tools'
-            sudo yum -y install nginx
-            sudo yum -y git
+            sudo amazon-linux-extras install nginx1
+            sudo yum -y install git
             cd /home/ec2-user
             git clone https://github.com/m124578n/testCICD_stage2.git
             python3 -m venv venv
@@ -46,11 +46,11 @@ jobs:
             pip install -r requirements.txt
           
             cd /usr/local/src
-            wget http://www.sqlite.org/2021/sqlite-autoconf-3360000.tar.gz
-            tar -zxvf sqlite-autoconf-3360000.tar.gz
+            sudo wget http://www.sqlite.org/2021/sqlite-autoconf-3360000.tar.gz
+            sudo tar -zxvf sqlite-autoconf-3360000.tar.gz
             cd sqlite-autoconf-3360000
-            ./configure --prefix=/usr/local/sqlite
-            make && make install
+            sudo ./configure --prefix=/usr/local/sqlite
+            sudo make && make install
 
             mv /usr/bin/sqlite3 /usr/bin/sqlite3_bak
             cd /usr/local/sqlite/bin/
