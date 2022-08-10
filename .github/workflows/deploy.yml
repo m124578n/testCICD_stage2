@@ -43,7 +43,7 @@ jobs:
             python3 -m venv venv
             source /home/ec2-user/venv/bin/activate
             python -V
-            pip install -r requirements.txt
+            pip install -r /home/ec2-user/testCICD_stage2/requirements.txt
           
             cd /usr/local/src
             sudo wget http://www.sqlite.org/2021/sqlite-autoconf-3360000.tar.gz
@@ -52,15 +52,15 @@ jobs:
             sudo ./configure --prefix=/usr/local/sqlite
             sudo make && make install
 
-            mv /usr/bin/sqlite3 /usr/bin/sqlite3_bak
+            sudp mv /usr/bin/sqlite3 /usr/bin/sqlite3_bak
             cd /usr/local/sqlite/bin/
-            ln -s sqlite3 /usr/bin/sqlite3
+            sudo ln -s sqlite3 /usr/bin/sqlite3
 
-            echo export LD_LIBRARY_PATH="/usr/local/sqlite/lib" >> ~/.bashrc
+            sudo echo export LD_LIBRARY_PATH="/usr/local/sqlite/lib" >> ~/.bashrc
             source ~/.bashrc
 
-            mv /usr/lib64/libsqlite3.so.0 /usr/lib64/libsqlite3.so.0_old
-            ln -s /usr/local/sqlite/lib/libsqlite3.so.0.8.6 /usr/lib64/libsqlite3.so.0
+            sudo mv /usr/lib64/libsqlite3.so.0 /usr/lib64/libsqlite3.so.0_old
+            sudo ln -s /usr/local/sqlite/lib/libsqlite3.so.0.8.6 /usr/lib64/libsqlite3.so.0
 
             cd /home/ec2-user/testCICD_stage2
             python3 manage.py makemigrations
